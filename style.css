@@ -1,10 +1,20 @@
 body {
   background-color: #27ae60;
 }
+#playerSelect{
+  position: absolute;
+  border-radius: 25px;
+  text-align: center;
+  margin-left: 60px;
+  margin-top: 80px;
+  width: 200px;
+  height: 150px;
+  background-color: #ecf0f1;
+
+}
 #main{
   width: 310px;
   margin: 50px auto;
-  //padding-left: 160px;
 }
 .row {
   display: flex;
