@@ -20,24 +20,35 @@ $(document).ready(function(){
     }
   }
   function availSpots(board){
-    var counter = 0;
+    var counter = 9;
+    availMoves = [];
     board.forEach((element =>{
       if(typeof(element) == 'number'){
-        counter++;
+        //counter++;
         availMoves.push(board.indexOf(element));
+      }
+      else{
+        counter--;
       }
     }));
     openSpots = [counter, availMoves];
   }
-  function miniMax(theoBoard, aiPlayer){
-    if(theoBoard[0] == 9){
-      console.log("first move!")
+  function miniMax(openSpots, board, aiPlayer){
+    //console.log(board);
+    //console.log(openSpots);
+    availSpots(board);
+    if(openSpots[0] == 9){
+      board.shift();
+      board.unshift("x");
     }
     else{
-      console.log("no first move :(");
+      for(i=0; i<openSpots[0]; i++){
+        console.log(openSpots[1][i]);
+      }
     }
+    console.log(board);
 
   }
-  availSpots(board);
-  miniMax(openSpots, aiPlayer);
+  miniMax(openSpots, board, aiPlayer);
+  miniMax(openSpots, board, aiPlayer);
 }); //END DOC READY
