@@ -24,7 +24,6 @@ $(document).ready(function(){
     availMoves = [];
     board.forEach((element =>{
       if(typeof(element) == 'number'){
-        //counter++;
         availMoves.push(board.indexOf(element));
       }
       else{
@@ -34,8 +33,6 @@ $(document).ready(function(){
     openSpots = [counter, availMoves];
   }
   function miniMax(openSpots, board, aiPlayer){
-    //console.log(board);
-    //console.log(openSpots);
     availSpots(board);
     if(openSpots[0] == 9){
       board.shift();
@@ -43,12 +40,13 @@ $(document).ready(function(){
     }
     else{
       for(i=0; i<openSpots[0]; i++){
-        console.log(openSpots[1][i]);
+        //console.log(openSpots[1][i]);
+        //console.log(endGameEval(aiPlayer, ))
       }
     }
-    console.log(board);
-
   }
   miniMax(openSpots, board, aiPlayer);
+  console.log(openSpots);
   miniMax(openSpots, board, aiPlayer);
+  console.log(openSpots);
 }); //END DOC READY

@@ -3,13 +3,17 @@ body {
 }
 #playerSelect{
   position: absolute;
-  border-radius: 25px;
+  border-radius: 5px;
   text-align: center;
-  margin-left: 60px;
-  margin-top: 80px;
-  width: 200px;
-  height: 150px;
+  margin-left: 0px;
+  margin-top: 0px;
+  width: 310px;
+  height: 310px;
   background-color: #ecf0f1;
+  font-family: 'Supermercado One', cursive;
+
+}
+#playerSelect{
 
 }
 #main{
