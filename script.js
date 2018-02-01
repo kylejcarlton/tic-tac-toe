@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var aiPlayer, huPlayer, board = [0,1,2,3,4,5,6,7,8], availMoves = [], openSpots = [9,[0,1,2,3,4,5,6,7,8]], turn = x;
+  var aiPlayer, huPlayer, board = [0,1,2,3,4,5,6,7,8], availMoves = [], turn = x, moves = [];
   // https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
   aiPlayer = x;
   huPlayer = o; //Need to define functions that ties these into initial menu
@@ -12,7 +12,8 @@ $(document).ready(function(){
       (player == board[1] == board[4] == board [7]) ||
       (player == board[2] == board[5] == board [8]) ||
       (player == board[0] == board[4] == board [8]) ||
-      (player == board[6] == board[4] == board [2])
+      (player == board[6] == board[4] == board [2]) ||
+      (openSpots[0] === 0)
     ){
       return true;
     } else {
@@ -30,23 +31,13 @@ $(document).ready(function(){
         counter--;
       }
     }));
-    openSpots = [counter, availMoves];
+    availMoves.unshift(counter);
+    return availMoves;
   }
-  function miniMax(openSpots, board, aiPlayer){
+  function miniMax(board, aiPlayer, huPlayer){
     availSpots(board);
-    if(openSpots[0] == 9){
-      board.shift();
-      board.unshift("x");
-    }
-    else{
       for(i=0; i<openSpots[0]; i++){
-        //console.log(openSpots[1][i]);
-        //console.log(endGameEval(aiPlayer, ))
+        console.log(endGameEval(aiPlayer,openSpots[1]));
       }
     }
-  }
-  miniMax(openSpots, board, aiPlayer);
-  console.log(openSpots);
-  miniMax(openSpots, board, aiPlayer);
-  console.log(openSpots);
 }); //END DOC READY
