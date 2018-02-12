@@ -39,7 +39,13 @@ $(document).ready(function(){
   }
   function miniMax(moves){
     if(endGameEval(moves.move, moves.board) == false){
-      console.log(moves);
+      //change players
+      //calculate available spots
+      //assign new player to each spot
+      //pass back to miniMax for evaluation
+    }
+    else{
+      console.log("The End");
     }
   }
 
