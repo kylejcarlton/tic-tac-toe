@@ -4,11 +4,11 @@ $(document).ready(function(){
   huPlayer = "o"; //Need to define functions that ties these into initial menu
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
-    for(i=0; i<potentialMoves.length; i++){
+    for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
-      potentialBoard[potentialMoves[i]] = aiPlayer;
-      moves.push({option:i,move:aiPlayer,board:potentialBoard});
-      miniMax(moves[i]);
+      potentialBoard[potentialMoves[j]] = aiPlayer;
+      moves.push({option:j,move:aiPlayer,board:potentialBoard});
+      miniMax(moves[j]);
     }
   }
   function endGameEval(player, board){
@@ -37,12 +37,14 @@ $(document).ready(function(){
     }
     return availMoves;
   }
-  function miniMax(moves){
-    if(endGameEval(moves.move, moves.board) == false){
-      //change players
+  function miniMax(pMove){
+    if(endGameEval(pMove.move, pMove.board) == false){
+      console.log("true");
+      //change player
+      //if()
       //calculate available spots
-      //assign new player to each spot
-      //pass back to miniMax for evaluation
+      //assign changed player to each spot in each array value
+      //pass each new board back to miniMax for evaluation
     }
     else{
       console.log("The End");
