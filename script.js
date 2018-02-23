@@ -35,16 +35,21 @@ $(document).ready(function(){
       //calculate available spots
       //console.log(availSpots(pMove.board));
       //assign changed player to each spot in each array value, then pass each new board back to miniMax for evaluation
-      for(k=0; k<availSpots(pMove.board).length; k++){
-        console.log(pMove.board);
-        console.log(k);
+      var counter = availSpots(pMove.board).length;
+      var boardOptions = availSpots(pMove.board);
+      for(k=0; k<counter; k++){
+        //console.log(pMove.board);
+        //console.log(k);
+        //console.log(availSpots(pMove.board)[k]);
+        var boardOption = pMove.board;
         pMove.board[availSpots(pMove.board)[k]] = pMove.move;
-        console.log(pMove.board);
+        //console.log(pMove.board);
 
       }
     }
     else{
       console.log("End State of option: "+pMove.option);
+      console.log(pMove);
     }
   }
   function endGameEval(player, board){
