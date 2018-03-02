@@ -49,13 +49,23 @@ $(document).ready(function(){
         boardOption[boardOptions[k]] = pMove.move;
         var pMoveCopy = Object.assign({}, pMove);
         pMoveCopy.board = boardOption;
-        miniMax(pMoveCopy);
         //console.log(pMoveCopy);
+        miniMax(pMoveCopy);
       }
     }
     else{
-      console.log("End State of option: "+pMove.option);
-      console.log(pMove);
+      if (endGameEval(aiPlayer, pMove.board)){
+        console.log(aiPlayer + "Wins!");
+        console.log(pMove.board);
+      }
+      else if (endGameEval(huPlayer, pMove.board)){
+        console.log(huPlayer + "Wins!");
+        console.log(pMove.board);
+      }
+      else{
+        console.log("It's a tie!");
+        console.log(pMove.board);
+      }
     }
   }
   function endGameEval(player, board){
