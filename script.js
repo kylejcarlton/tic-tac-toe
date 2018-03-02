@@ -1,7 +1,17 @@
 $(document).ready(function(){
   var aiPlayer, huPlayer, board = [0,1,2,3,4,5,6,7,8], availMoves = [], potentialMoves = [], moves = [];
+  $("#x").click(function(){
+    aiPlayer = "o";
+    huPlayer = "x";
+    $("#playerSelect").fadeOut();
+  });
+  $("#o").click(function(){
+    aiPlayer = "x";
+    huPlayer = "o";
+    $("#playerSelect").fadeOut();
+  });
   aiPlayer = "x";
-  huPlayer = "o"; //Need to define functions that ties these into initial menu
+  huPlayer = "o";
 
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
@@ -32,19 +42,15 @@ $(document).ready(function(){
           pMove.move = "x";
           break;
       }
-      //calculate available spots
-      //console.log(availSpots(pMove.board));
-      //assign changed player to each spot in each array value, then pass each new board back to miniMax for evaluation
       var counter = availSpots(pMove.board).length;
       var boardOptions = availSpots(pMove.board);
       for(k=0; k<counter; k++){
-        //console.log(pMove.board);
-        //console.log(k);
-        //console.log(availSpots(pMove.board)[k]);
-        var boardOption = pMove.board;
-        pMove.board[availSpots(pMove.board)[k]] = pMove.move;
-        //console.log(pMove.board);
-
+        var boardOption = pMove.board.slice(0);
+        boardOption[boardOptions[k]] = pMove.move;
+        var pMoveCopy = Object.assign({}, pMove);
+        pMoveCopy.board = boardOption;
+        miniMax(pMoveCopy);
+        //console.log(pMoveCopy);
       }
     }
     else{
