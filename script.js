@@ -18,9 +18,10 @@ $(document).ready(function(){
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
       potentialBoard[potentialMoves[j]] = aiPlayer;
-      moves.push({option:j,move:aiPlayer,board:potentialBoard, rating:0});
+      moves.push({option:j,move:huPlayer,board:potentialBoard, rating:0});
       miniMax(moves[j]);
     }
+    console.log(moves);
   }
   function availSpots(board){
     availMoves = [];
@@ -33,7 +34,6 @@ $(document).ready(function(){
   }
   function miniMax(pMove){
     if(endGameEval(pMove.move, pMove.board) == false){
-      //change player
       switch(pMove.move){
         case "x":
           pMove.move = "o";
@@ -56,11 +56,11 @@ $(document).ready(function(){
     else{
       if (endGameEval(aiPlayer, pMove.board)){
         console.log(aiPlayer + "Wins!");
-        console.log(pMove.board);
+        console.log(pMove);
       }
       else if (endGameEval(huPlayer, pMove.board)){
         console.log(huPlayer + "Wins!");
-        console.log(pMove.board);
+        console.log(pMove);
       }
       else{
         console.log("It's a tie!");
@@ -87,5 +87,6 @@ $(document).ready(function(){
   }
 
   board = ["o",1,"x","x",4,"x",6,"o","o"]
+  //board = [0,1,2,3,4,5,6,7,8]
   aiMove(board, aiPlayer);
 }); //END DOC READY
