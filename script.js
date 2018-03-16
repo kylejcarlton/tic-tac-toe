@@ -18,7 +18,7 @@ $(document).ready(function(){
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
       potentialBoard[potentialMoves[j]] = aiPlayer;
-      moves.push({option:j,move:huPlayer,board:potentialBoard, rating:0});
+      moves.push({option:j,move:huPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
     console.log(moves);
@@ -33,6 +33,7 @@ $(document).ready(function(){
     return availMoves;
   }
   function miniMax(pMove){
+    pMove.level++;
     if(endGameEval(pMove.move, pMove.board) == false){
       switch(pMove.move){
         case "x":
@@ -42,23 +43,30 @@ $(document).ready(function(){
           pMove.move = "x";
           break;
       }
-      var counter = availSpots(pMove.board).length;
-      var boardOptions = availSpots(pMove.board);
-      for(k=0; k<counter; k++){
-        var boardOption = pMove.board.slice(0);
-        boardOption[boardOptions[k]] = pMove.move;
-        var pMoveCopy = Object.assign({}, pMove);
-        pMoveCopy.board = boardOption;
-        //console.log(pMoveCopy);
-        miniMax(pMoveCopy);
+      if(pMove.rating == 0){
+        var counter = availSpots(pMove.board).length;
+        var boardOptions = availSpots(pMove.board);
+        for(k=0; k<counter; k++){
+          var boardOption = pMove.board.slice(0);
+          boardOption[boardOptions[k]] = pMove.move;
+          var pMoveCopy = Object.assign({}, pMove);
+          pMoveCopy.board = boardOption;
+          //console.log(pMoveCopy);
+          miniMax(pMoveCopy);
+        }
       }
     }
     else{
       if (endGameEval(aiPlayer, pMove.board)){
         console.log(aiPlayer + "Wins!");
+        //add a value to rating that can be evaluated up by counter to stop after end state is reached.
+        pMove.rating = 1;
+        k = counter;
         console.log(pMove);
       }
       else if (endGameEval(huPlayer, pMove.board)){
+        pMove.rating = -1;
+        k = counter;
         console.log(huPlayer + "Wins!");
         console.log(pMove);
       }
