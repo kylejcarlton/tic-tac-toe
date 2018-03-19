@@ -10,7 +10,8 @@ $(document).ready(function(){
     huPlayer = "o";
     $("#playerSelect").fadeOut();
   });
-  aiPlayer = "x";
+
+  aiPlayer = "x"; //remove when logic is in place.
   huPlayer = "o";
 
   function aiMove(board, aiPlayer){
@@ -21,16 +22,14 @@ $(document).ready(function(){
       moves.push({option:j,move:huPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
-    console.log(moves);
-  }
-  function availSpots(board){
-    availMoves = [];
-    for(i=0; i<=board.length; i++){
-      if(typeof(board[i]) == 'number'){
-        availMoves.push(board[i]);
-      }
+    for(l=0; l<moves.length; l++){
+      console.log(moves[l].rating);
+      // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects ?
+      //if(moves[l].rating < 0){
+        //moves.splice(l, 1);
+      //}
     }
-    return availMoves;
+    console.log(moves);
   }
   function miniMax(pMove){
     pMove.level++;
@@ -51,30 +50,34 @@ $(document).ready(function(){
           boardOption[boardOptions[k]] = pMove.move;
           var pMoveCopy = Object.assign({}, pMove);
           pMoveCopy.board = boardOption;
-          //console.log(pMoveCopy);
           miniMax(pMoveCopy);
         }
       }
     }
     else{
       if (endGameEval(aiPlayer, pMove.board)){
-        console.log(aiPlayer + "Wins!");
-        //add a value to rating that can be evaluated up by counter to stop after end state is reached.
         pMove.rating = 1;
         k = counter;
-        console.log(pMove);
+        moves[pMove.option] = pMove;
       }
       else if (endGameEval(huPlayer, pMove.board)){
         pMove.rating = -1;
         k = counter;
-        console.log(huPlayer + "Wins!");
-        console.log(pMove);
+        moves[pMove.option] = pMove;
       }
       else{
-        console.log("It's a tie!");
-        console.log(pMove.board);
+        moves[pMove.option] = pMove;
       }
     }
+  }
+  function availSpots(board){
+    availMoves = [];
+    for(i=0; i<=board.length; i++){
+      if(typeof(board[i]) == 'number'){
+        availMoves.push(board[i]);
+      }
+    }
+    return availMoves;
   }
   function endGameEval(player, board){
     if (
@@ -93,8 +96,7 @@ $(document).ready(function(){
       return false;
     }
   }
-
-  board = ["o",1,"x","x",4,"x",6,"o","o"]
-  //board = [0,1,2,3,4,5,6,7,8]
+  //board = ["o",1,"x","x",4,"x",6,"o","o"]
+  board = [0,1,2,3,4,5,6,7,8]
   aiMove(board, aiPlayer);
 }); //END DOC READY
