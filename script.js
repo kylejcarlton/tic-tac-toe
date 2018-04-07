@@ -1,18 +1,33 @@
 $(document).ready(function(){
-  var aiPlayer, huPlayer, board = [0,1,2,3,4,5,6,7,8], availMoves = [], potentialMoves = [], moves = [];
+  var aiPlayer, huPlayer, turn, board = [0,1,2,3,4,5,6,7,8], availMoves = [], potentialMoves = [], moves = [];
   $("#x").click(function(){
     aiPlayer = "o";
     huPlayer = "x";
+    turn = "huPlayer";
+    gameTurn(aiPlayer, huPlayer, turn);
     $("#playerSelect").fadeOut();
   });
   $("#o").click(function(){
     aiPlayer = "x";
     huPlayer = "o";
+    turn = "aiPlayer";
+    gameTurn(aiPlayer, huPlayer, turn);
     $("#playerSelect").fadeOut();
   });
 
-  aiPlayer = "x"; //remove when logic is in place.
-  huPlayer = "o";
+  function gameTurn (aiPlayer, huPlayer, turn){
+    if(turn == "aiPlayer"){
+      console.log("logic to make move and write it !!")
+
+    }
+    else if(turn == "huPlayer"){
+      console.log("let human move now.")
+
+    }
+  }
+
+  //aiPlayer = "x"; //remove when logic is in place.
+  //huPlayer = "o";
 
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
