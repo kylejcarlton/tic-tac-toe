@@ -21,7 +21,14 @@ $(document).ready(function(){
 
     }
     else if(turn == "huPlayer"){
-      console.log("let human move now.")
+      console.log("let human move now.");
+      $(".avail").click(function(){
+        board[$(this).attr('id')] = huPlayer;
+        var clickedCell = $(this).attr('id');
+        console.log($(this));
+        $(this).removeClass("avail");
+        console.log(board);
+      });
 
     }
   }
@@ -111,7 +118,8 @@ $(document).ready(function(){
       return false;
     }
   }
+
   //board = ["o",1,"x","x",4,"x",6,"o","o"]
-  board = [0,1,2,3,4,5,6,7,8]
-  aiMove(board, aiPlayer);
+  //board = [0,1,2,3,4,5,6,7,8]
+  //aiMove(board, aiPlayer);
 }); //END DOC READY
