@@ -23,9 +23,9 @@ $(document).ready(function(){
     else if(turn == "huPlayer"){
       console.log("let human move now.");
       $(".avail").click(function(){
-        board[$(this).attr('id')] = huPlayer;
-        var clickedCell = $(this).attr('id');
-        console.log($(this));
+        var clickedCell = $(this).attr('id').slice(1,2);
+        console.log(clickedCell);
+        board[clickedCell] = huPlayer;
         $(this).removeClass("avail");
         console.log(board);
       });
