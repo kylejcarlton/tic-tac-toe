@@ -23,19 +23,17 @@ $(document).ready(function(){
     else if(turn == "huPlayer"){
       console.log("let human move now.");
       $(".avail").click(function(){
+        $(this).html("<p>"+huPlayer+"</p>");
         var clickedCell = $(this).attr('id').slice(1,2);
-        console.log(clickedCell);
         board[clickedCell] = huPlayer;
         $(this).removeClass("avail");
         console.log(board);
+        turn = "aiPlayer";
+        gameTurn(aiPlayer, huPlayer, turn);
       });
 
     }
   }
-
-  //aiPlayer = "x"; //remove when logic is in place.
-  //huPlayer = "o";
-
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
     for(j=0; j<potentialMoves.length; j++){
