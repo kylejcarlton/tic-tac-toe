@@ -14,16 +14,15 @@ $(document).ready(function(){
     gameTurn(aiPlayer, huPlayer, turn);
     $("#playerSelect").fadeOut();
   });
-
   function gameTurn (aiPlayer, huPlayer, turn){
     if(turn == "aiPlayer"){
-      console.log("logic to make move and write it !!")
-
+      console.log("logic to make move and write it !!");
+      aiMove(board, aiPlayer);
     }
     else if(turn == "huPlayer"){
       console.log("let human move now.");
       $(".avail").click(function(){
-        $(this).html("<p>"+huPlayer+"</p>");
+        $(this).html(huPlayer.toUpperCase());
         var clickedCell = $(this).attr('id').slice(1,2);
         board[clickedCell] = huPlayer;
         $(this).removeClass("avail");
@@ -31,7 +30,6 @@ $(document).ready(function(){
         turn = "aiPlayer";
         gameTurn(aiPlayer, huPlayer, turn);
       });
-
     }
   }
   function aiMove(board, aiPlayer){
@@ -43,11 +41,7 @@ $(document).ready(function(){
       miniMax(moves[j]);
     }
     for(l=0; l<moves.length; l++){
-      console.log(moves[l].rating);
       // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects ?
-      //if(moves[l].rating < 0){
-        //moves.splice(l, 1);
-      //}
     }
     console.log(moves);
   }
@@ -116,8 +110,4 @@ $(document).ready(function(){
       return false;
     }
   }
-
-  //board = ["o",1,"x","x",4,"x",6,"o","o"]
-  //board = [0,1,2,3,4,5,6,7,8]
-  //aiMove(board, aiPlayer);
 }); //END DOC READY
