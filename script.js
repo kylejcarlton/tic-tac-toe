@@ -40,10 +40,18 @@ $(document).ready(function(){
       moves.push({option:j,move:huPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
+    // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
+    var winningMoves = [];
     for(l=0; l<moves.length; l++){
-      // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects ?
+      if(moves[l].rating > 0){
+        winningMoves.push(moves[l]);
+      }
     }
-    console.log(moves);
+    for(m=0; m<winningMoves.length; m++){
+      
+    }
+    console.log(potentialMoves);
+    console.log(winningMoves);
   }
   function miniMax(pMove){
     pMove.level++;
