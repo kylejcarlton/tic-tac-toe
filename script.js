@@ -37,21 +37,30 @@ $(document).ready(function(){
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
       potentialBoard[potentialMoves[j]] = aiPlayer;
-      moves.push({option:j,move:huPlayer,board:potentialBoard,level:0,rating:0});
+      moves.push({option:j,position:potentialMoves[j],move:huPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
-    // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
       if(moves[l].rating > 0){
         winningMoves.push(moves[l]);
       }
     }
+    // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
+    // https://stackoverflow.com/questions/21255138/how-does-the-math-max-apply-work
+    // https://jsperf.com/finding-the-max-value-an-array-of-objects
+    let min = 9;
     for(m=0; m<winningMoves.length; m++){
-      
+      if(winningMoves[m].level < min){
+        min = winningMoves[m].level;
+      }
     }
-    console.log(potentialMoves);
-    console.log(winningMoves);
+    for(n=0; n<winningMoves.length; n++){
+      if(winningMoves[n].level == min){
+        console.log(winningMoves[n].position);
+        return winningMoves[n].position;
+      }
+    }
   }
   function miniMax(pMove){
     pMove.level++;
