@@ -27,6 +27,7 @@ $(document).ready(function(){
         board[clickedCell] = huPlayer;
         $(this).removeClass("avail");
         console.log(board);
+        //https://stackoverflow.com/questions/10366387/pausing-javascript-execution-until-button-press?noredirect=1&lq=1
         turn = "aiPlayer";
         gameTurn(aiPlayer, huPlayer, turn);
       });
