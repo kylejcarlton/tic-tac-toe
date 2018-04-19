@@ -57,7 +57,15 @@ $(document).ready(function(){
     }
     for(n=0; n<winningMoves.length; n++){
       if(winningMoves[n].level == min){
-        console.log(winningMoves[n].position);
+        //console.log(winningMoves[n].position);
+        board[winningMoves[n].position] = aiPlayer;
+        var cell = "s"+ winningMoves[n].position;
+        //console.log(cell);
+        $("#"+cell).html(aiPlayer.toUpperCase());
+        $("#"+cell).removeClass("avail");
+        console.log(board);
+        turn = "huPlayer";
+        gameTurn(aiPlayer, huPlayer, turn);
         return winningMoves[n].position;
       }
     }
