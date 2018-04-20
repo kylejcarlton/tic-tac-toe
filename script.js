@@ -14,6 +14,16 @@ $(document).ready(function(){
     gameTurn(aiPlayer, huPlayer, turn, board);
     $("#playerSelect").fadeOut();
   });
+  $(".avail").click(function(){
+    $(this).html(huPlayer.toUpperCase());
+    var clickedCell = $(this).attr('id').slice(1,2);
+    board[clickedCell] = huPlayer;
+    $(this).removeClass("avail");
+    console.log(board);
+    //https://stackoverflow.com/questions/10366387/pausing-javascript-execution-until-button-press?noredirect=1&lq=1
+    turn = "aiPlayer";
+    gameTurn(aiPlayer, huPlayer, turn, board);
+  });
   function gameTurn (aiPlayer, huPlayer, turn, board){
     if(turn == "aiPlayer"){
       console.log("logic to make move and write it !!");
@@ -21,16 +31,7 @@ $(document).ready(function(){
     }
     else if(turn == "huPlayer"){
       console.log("let human move now.");
-      $(".avail").click(function(){
-        $(this).html(huPlayer.toUpperCase());
-        var clickedCell = $(this).attr('id').slice(1,2);
-        board[clickedCell] = huPlayer;
-        $(this).removeClass("avail");
-        console.log(board);
-        //https://stackoverflow.com/questions/10366387/pausing-javascript-execution-until-button-press?noredirect=1&lq=1
-        turn = "aiPlayer";
-        gameTurn(aiPlayer, huPlayer, turn, board);
-      });
+
     }
   }
   function aiMove(board, aiPlayer){
