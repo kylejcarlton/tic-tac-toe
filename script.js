@@ -25,13 +25,17 @@ $(document).ready(function(){
     gameTurn(aiPlayer, huPlayer, turn, board);
   });
   function gameTurn (aiPlayer, huPlayer, turn, board){
-    if(turn == "aiPlayer"){
-      console.log("logic to make move and write it !!");
-      aiMove(board, aiPlayer);
+    if(endGameEval(turn, board) == true){
+      $("#gameEnd").fadeIn();
     }
-    else if(turn == "huPlayer"){
-      console.log("let human move now.");
-
+    else{
+      if(turn == "aiPlayer"){
+        console.log("logic to make move and write it !!");
+        aiMove(board, aiPlayer);
+      }
+      else if(turn == "huPlayer"){
+        console.log("let human move now.");
+      }
     }
   }
   function aiMove(board, aiPlayer){
