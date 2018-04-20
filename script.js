@@ -4,17 +4,17 @@ $(document).ready(function(){
     aiPlayer = "o";
     huPlayer = "x";
     turn = "huPlayer";
-    gameTurn(aiPlayer, huPlayer, turn);
+    gameTurn(aiPlayer, huPlayer, turn, board);
     $("#playerSelect").fadeOut();
   });
   $("#o").click(function(){
     aiPlayer = "x";
     huPlayer = "o";
     turn = "aiPlayer";
-    gameTurn(aiPlayer, huPlayer, turn);
+    gameTurn(aiPlayer, huPlayer, turn, board);
     $("#playerSelect").fadeOut();
   });
-  function gameTurn (aiPlayer, huPlayer, turn){
+  function gameTurn (aiPlayer, huPlayer, turn, board){
     if(turn == "aiPlayer"){
       console.log("logic to make move and write it !!");
       aiMove(board, aiPlayer);
@@ -29,27 +29,27 @@ $(document).ready(function(){
         console.log(board);
         //https://stackoverflow.com/questions/10366387/pausing-javascript-execution-until-button-press?noredirect=1&lq=1
         turn = "aiPlayer";
-        gameTurn(aiPlayer, huPlayer, turn);
+        gameTurn(aiPlayer, huPlayer, turn, board);
       });
     }
   }
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
+    moves = [];
+    console.log(potentialMoves);
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
       potentialBoard[potentialMoves[j]] = aiPlayer;
-      moves.push({option:j,position:potentialMoves[j],move:huPlayer,board:potentialBoard,level:0,rating:0});
+      moves.push({option:j,position:potentialMoves[j],move:aiPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
+    console.log(moves);
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
       if(moves[l].rating > 0){
         winningMoves.push(moves[l]);
       }
     }
-    // https://stackoverflow.com/questions/4020796/finding-the-max-value-of-an-attribute-in-an-array-of-objects
-    // https://stackoverflow.com/questions/21255138/how-does-the-math-max-apply-work
-    // https://jsperf.com/finding-the-max-value-an-array-of-objects
     let min = 9;
     for(m=0; m<winningMoves.length; m++){
       if(winningMoves[m].level < min){
@@ -61,18 +61,19 @@ $(document).ready(function(){
         //console.log(winningMoves[n].position);
         board[winningMoves[n].position] = aiPlayer;
         var cell = "s"+ winningMoves[n].position;
-        //console.log(cell);
+        console.log(cell);
         $("#"+cell).html(aiPlayer.toUpperCase());
         $("#"+cell).removeClass("avail");
         console.log(board);
         turn = "huPlayer";
-        gameTurn(aiPlayer, huPlayer, turn);
+        gameTurn(aiPlayer, huPlayer, turn, board);
         return winningMoves[n].position;
       }
     }
   }
   function miniMax(pMove){
     pMove.level++;
+    //console.log(pMove);
     if(endGameEval(pMove.move, pMove.board) == false){
       switch(pMove.move){
         case "x":
@@ -117,6 +118,7 @@ $(document).ready(function(){
         availMoves.push(board[i]);
       }
     }
+    //console.log(availMoves);
     return availMoves;
   }
   function endGameEval(player, board){
