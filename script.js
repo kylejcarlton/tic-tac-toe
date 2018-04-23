@@ -14,6 +14,9 @@ $(document).ready(function(){
     gameTurn(aiPlayer, huPlayer, turn, board);
     $("#playerSelect").fadeOut();
   });
+  $("#playagain").click(function(){
+    location.reload();
+  });
   $(".avail").click(function(){
     $(this).html(huPlayer.toUpperCase());
     var clickedCell = $(this).attr('id').slice(1,2);
@@ -26,8 +29,14 @@ $(document).ready(function(){
   });
   function gameTurn (aiPlayer, huPlayer, turn, board){
     if(endGameEval(aiPlayer, board) || endGameEval(huPlayer, board) == true){
-      $("#gameEnd").fadeIn();
-      //$("#winner").html("X");
+      if(endGameEval(aiPlayer, board) == true){
+        $("#gameEnd").fadeIn();
+        $("#winner").html(aiPlayer.toUpperCase());
+      }
+      else{
+        $("#gameEnd").fadeIn();
+        $("#winner").html(huPlayer.toUpperCase());
+      }
     }
     else{
       if(turn == "aiPlayer"){
@@ -49,31 +58,38 @@ $(document).ready(function(){
       moves.push({option:j,position:potentialMoves[j],move:aiPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
-    console.log(moves);
+    //console.log(moves);
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
       if(moves[l].rating > 0){
         winningMoves.push(moves[l]);
       }
     }
+    /*for(p=0; p<winningMoves.length; p++){
+      if(endGameEval(huPlayer, winningMoves[p].board) == true){
+          winningMoves.splice(p,1);
+      }
+    }*/
     let min = 9;
     for(m=0; m<winningMoves.length; m++){
       if(winningMoves[m].level < min){
-        min = winningMoves[m].level;
+          min = winningMoves[m].level;
       }
     }
+    console.log(winningMoves);
     for(n=0; n<winningMoves.length; n++){
-      if(winningMoves[n].level == min){
-        //console.log(winningMoves[n].position);
-        board[winningMoves[n].position] = aiPlayer;
-        var cell = "s"+ winningMoves[n].position;
-        console.log(cell);
-        $("#"+cell).html(aiPlayer.toUpperCase());
-        $("#"+cell).removeClass("avail");
-        console.log(board);
-        turn = "huPlayer";
-        gameTurn(aiPlayer, huPlayer, turn, board);
-        return winningMoves[n].position;
+      if(winningMoves[n].level == min /*&& endGameEval(huPlayer, winningMoves.board) != true*/){
+        //if(endGameEval(huPlayer, winningMoves[n].board) != true){
+          board[winningMoves[n].position] = aiPlayer;
+          var cell = "s"+ winningMoves[n].position;
+          console.log(cell);
+          $("#"+cell).html(aiPlayer.toUpperCase());
+          $("#"+cell).removeClass("avail");
+          console.log(board);
+          turn = "huPlayer";
+          gameTurn(aiPlayer, huPlayer, turn, board);
+          return winningMoves[n].position;
+        //}
       }
     }
   }
@@ -89,7 +105,7 @@ $(document).ready(function(){
           pMove.move = "x";
           break;
       }
-      if(pMove.rating == 0){
+      if(pMove.level == 0){
         var counter = availSpots(pMove.board).length;
         var boardOptions = availSpots(pMove.board);
         for(k=0; k<counter; k++){
@@ -103,12 +119,14 @@ $(document).ready(function(){
     }
     else{
       if (endGameEval(aiPlayer, pMove.board)){
-        pMove.rating = 1;
+        //pMove.rating = 1;
+        pMove.rating++;
         k = counter;
         moves[pMove.option] = pMove;
       }
       else if (endGameEval(huPlayer, pMove.board)){
-        pMove.rating = -1;
+        //pMove.rating = -1;
+        pMove.rating--;
         k = counter;
         moves[pMove.option] = pMove;
       }
@@ -124,7 +142,6 @@ $(document).ready(function(){
         availMoves.push(board[i]);
       }
     }
-    //console.log(availMoves);
     return availMoves;
   }
   function endGameEval(player, board){

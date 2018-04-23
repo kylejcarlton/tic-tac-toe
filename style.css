@@ -3,7 +3,7 @@ body{
 }
 .overlay{
   position: absolute;
-  border-radius: 5px;
+  //border-radius: 5px;
   text-align: center;
   margin-left: 0px;
   margin-top: 0px;
