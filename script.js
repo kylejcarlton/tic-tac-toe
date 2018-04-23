@@ -25,8 +25,9 @@ $(document).ready(function(){
     gameTurn(aiPlayer, huPlayer, turn, board);
   });
   function gameTurn (aiPlayer, huPlayer, turn, board){
-    if(endGameEval(turn, board) == true){
+    if(endGameEval(aiPlayer, board) || endGameEval(huPlayer, board) == true){
       $("#gameEnd").fadeIn();
+      //$("#winner").html("X");
     }
     else{
       if(turn == "aiPlayer"){

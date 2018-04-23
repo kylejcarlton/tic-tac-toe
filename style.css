@@ -11,6 +11,7 @@ body{
   height: 310px;
   background-color: #ecf0f1;
   font-family: 'Supermercado One', cursive;
+  opacity: 0.8;
 }
 #main{
   width: 310px;
