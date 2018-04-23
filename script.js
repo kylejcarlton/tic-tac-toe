@@ -105,7 +105,7 @@ $(document).ready(function(){
           pMove.move = "x";
           break;
       }
-      if(pMove.level == 0){
+      if(pMove.rating == 0){
         var counter = availSpots(pMove.board).length;
         var boardOptions = availSpots(pMove.board);
         for(k=0; k<counter; k++){
@@ -119,14 +119,14 @@ $(document).ready(function(){
     }
     else{
       if (endGameEval(aiPlayer, pMove.board)){
-        //pMove.rating = 1;
-        pMove.rating++;
+        pMove.rating = 1;
+        //pMove.rating++;
         k = counter;
         moves[pMove.option] = pMove;
       }
       else if (endGameEval(huPlayer, pMove.board)){
-        //pMove.rating = -1;
-        pMove.rating--;
+        pMove.rating = -1;
+        //pMove.rating--;
         k = counter;
         moves[pMove.option] = pMove;
       }
