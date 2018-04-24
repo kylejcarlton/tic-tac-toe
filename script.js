@@ -1,5 +1,27 @@
 $(document).ready(function(){
   var aiPlayer, huPlayer, turn, board = [0,1,2,3,4,5,6,7,8], availMoves = [], potentialMoves = [], moves = [];
+  /*FUNCTION TESTING  */
+  endGameEval("x", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
+  endGameEval("o", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
+  function endGameEval(player, board){
+    if (
+    (board[0] == player && board[1] == player && board[2] == player) ||
+    (board[3] == player && board[4] == player && board[5] == player) ||
+    (board[6] == player && board[7] == player && board[8] == player) ||
+    (board[0] == player && board[3] == player && board[6] == player) ||
+    (board[1] == player && board[4] == player && board[7] == player) ||
+    (board[2] == player && board[5] == player && board[8] == player) ||
+    (board[0] == player && board[4] == player && board[8] == player) ||
+    (board[2] == player && board[4] == player && board[6] == player) ||
+    (availSpots(board).length == 0)
+    ) {
+      console.log("Winner"+player)
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
   $("#x").click(function(){
     aiPlayer = "o";
     huPlayer = "x";
@@ -51,6 +73,7 @@ $(document).ready(function(){
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
     moves = [];
+      console.log("potentialMoves:");
     console.log(potentialMoves);
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
@@ -143,22 +166,5 @@ $(document).ready(function(){
       }
     }
     return availMoves;
-  }
-  function endGameEval(player, board){
-    if (
-    (board[0] == player && board[1] == player && board[2] == player) ||
-    (board[3] == player && board[4] == player && board[5] == player) ||
-    (board[6] == player && board[7] == player && board[8] == player) ||
-    (board[0] == player && board[3] == player && board[6] == player) ||
-    (board[1] == player && board[4] == player && board[7] == player) ||
-    (board[2] == player && board[5] == player && board[8] == player) ||
-    (board[0] == player && board[4] == player && board[8] == player) ||
-    (board[2] == player && board[4] == player && board[6] == player) ||
-    (availSpots(board).length == 0)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }); //END DOC READY
