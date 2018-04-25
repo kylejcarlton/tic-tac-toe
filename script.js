@@ -4,8 +4,10 @@ $(document).ready(function(){
   endGameEval("x", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
   endGameEval("o", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
   */
-  //aiMove(["x", 1, 2, 3, "x", 5, "o", "x", "o"], "o");
-
+  //aiMove(["o", 1, "o", "x", "x", 5, 6, 7, 8], "o");
+  function refreshPage(){
+    history.go(0);
+  }
   $("#x").click(function(){
     aiPlayer = "o";
     huPlayer = "x";
@@ -21,7 +23,8 @@ $(document).ready(function(){
     $("#playerSelect").fadeOut();
   });
   $("#playagain").click(function(){
-    location.reload();
+    refreshPage();
+    //location.reload();
   });
   $(".avail").click(function(){
     $(this).html(huPlayer.toUpperCase());
@@ -29,19 +32,22 @@ $(document).ready(function(){
     board[clickedCell] = huPlayer;
     $(this).removeClass("avail");
     console.log(board);
-    //https://stackoverflow.com/questions/10366387/pausing-javascript-execution-until-button-press?noredirect=1&lq=1
     turn = "aiPlayer";
     gameTurn(aiPlayer, huPlayer, turn, board);
   });
   function gameTurn (aiPlayer, huPlayer, turn, board){
     if(endGameEval(aiPlayer, board) || endGameEval(huPlayer, board) == true){
-      if(endGameEval(aiPlayer, board) == true){
+      if(winner(aiPlayer, board) == true){
         $("#gameEnd").fadeIn();
-        $("#winner").html(aiPlayer.toUpperCase());
+        $("#winner").html(aiPlayer.toUpperCase()+" Wins!");
       }
-      else{
+      else if(winner(huPlayer, board) == true){
         $("#gameEnd").fadeIn();
-        $("#winner").html(huPlayer.toUpperCase());
+        $("#winner").html(huPlayer.toUpperCase()+" Wins!");
+      }
+      else if(gameTieEval(board)){
+        $("#gameEnd").fadeIn();
+        $("#winner").html("Tie!");
       }
     }
     else{
@@ -64,7 +70,7 @@ $(document).ready(function(){
       moves.push({option:j,position:potentialMoves[j],move:aiPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
-    console.log("Moves:");
+    console.log("All Possible Moves:");
     console.log(moves);
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
@@ -72,11 +78,6 @@ $(document).ready(function(){
         winningMoves.push(moves[l]);
       }
     }
-    /*for(p=0; p<winningMoves.length; p++){
-      if(endGameEval(huPlayer, winningMoves[p].board) == true){
-          winningMoves.splice(p,1);
-      }
-    }*/
     let min = 9;
     for(m=0; m<winningMoves.length; m++){
       if(winningMoves[m].level < min){
@@ -86,8 +87,7 @@ $(document).ready(function(){
     console.log("Winning Moves:");
     console.log(winningMoves);
     for(n=0; n<winningMoves.length; n++){
-      if(winningMoves[n].level == min /*&& endGameEval(huPlayer, winningMoves.board) != true*/){
-        //if(endGameEval(huPlayer, winningMoves[n].board) != true){
+      if(winningMoves[n].level == min){
           board[winningMoves[n].position] = aiPlayer;
           var cell = "s"+ winningMoves[n].position;
           console.log(cell);
@@ -97,7 +97,6 @@ $(document).ready(function(){
           turn = "huPlayer";
           gameTurn(aiPlayer, huPlayer, turn, board);
           return winningMoves[n].position;
-        //}
       }
     }
   }
@@ -113,7 +112,8 @@ $(document).ready(function(){
           pMove.move = "x";
           break;
       }
-      if(pMove.rating == 0){
+      //if(pMove.rating == 0){
+      if(endGameEval("x", pMove.board) ||endGameEval("o", pMove.board) == false){
         var counter = availSpots(pMove.board).length;
         var boardOptions = availSpots(pMove.board);
         for(k=0; k<counter; k++){
@@ -126,14 +126,12 @@ $(document).ready(function(){
       }
     }
     else{
-      //if (endGameEval(aiPlayer, pMove.board) && gameTieEval(pMove.board) == false){
       if (winner(aiPlayer, pMove.board)){
           //pMove.rating = 1;
           pMove.rating++;
           k = counter;
           moves[pMove.option] = pMove;
       }
-      //else if (endGameEval(huPlayer, pMove.board) && gameTieEval(pMove.board) == false){
       else if (winner(huPlayer, pMove.board)){
         //pMove.rating = -1;
         pMove.rating--;
