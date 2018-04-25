@@ -1,27 +1,11 @@
 $(document).ready(function(){
   var aiPlayer, huPlayer, turn, board = [0,1,2,3,4,5,6,7,8], availMoves = [], potentialMoves = [], moves = [];
-  /*FUNCTION TESTING  */
+  /*FUNCTION TESTING
   endGameEval("x", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
   endGameEval("o", ["x", "o", "o", "x", "x", "x", "o", "x", "o"]);
-  function endGameEval(player, board){
-    if (
-    (board[0] == player && board[1] == player && board[2] == player) ||
-    (board[3] == player && board[4] == player && board[5] == player) ||
-    (board[6] == player && board[7] == player && board[8] == player) ||
-    (board[0] == player && board[3] == player && board[6] == player) ||
-    (board[1] == player && board[4] == player && board[7] == player) ||
-    (board[2] == player && board[5] == player && board[8] == player) ||
-    (board[0] == player && board[4] == player && board[8] == player) ||
-    (board[2] == player && board[4] == player && board[6] == player) ||
-    (availSpots(board).length == 0)
-    ) {
-      console.log("Winner"+player)
-      return true;
-    } else {
-      return false;
-    }
-  }
-  
+  */
+  //aiMove(["x", 1, 2, 3, "x", 5, "o", "x", "o"], "o");
+
   $("#x").click(function(){
     aiPlayer = "o";
     huPlayer = "x";
@@ -81,10 +65,10 @@ $(document).ready(function(){
       moves.push({option:j,position:potentialMoves[j],move:aiPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
-    //console.log(moves);
+    console.log(moves);
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
-      if(moves[l].rating > 0){
+      if(moves[l].rating >= 0){
         winningMoves.push(moves[l]);
       }
     }
@@ -141,15 +125,17 @@ $(document).ready(function(){
       }
     }
     else{
-      if (endGameEval(aiPlayer, pMove.board)){
-        pMove.rating = 1;
-        //pMove.rating++;
-        k = counter;
-        moves[pMove.option] = pMove;
+      //if (endGameEval(aiPlayer, pMove.board) && gameTieEval(pMove.board) == false){
+      if (winner(aiPlayer, pMove.board)){
+          //pMove.rating = 1;
+          pMove.rating++;
+          k = counter;
+          moves[pMove.option] = pMove;
       }
-      else if (endGameEval(huPlayer, pMove.board)){
-        pMove.rating = -1;
-        //pMove.rating--;
+      //else if (endGameEval(huPlayer, pMove.board) && gameTieEval(pMove.board) == false){
+      else if (winner(huPlayer, pMove.board)){
+        //pMove.rating = -1;
+        pMove.rating--;
         k = counter;
         moves[pMove.option] = pMove;
       }
@@ -166,5 +152,46 @@ $(document).ready(function(){
       }
     }
     return availMoves;
+  }
+  function endGameEval(player, board){
+    if (
+    (board[0] == player && board[1] == player && board[2] == player) ||
+    (board[3] == player && board[4] == player && board[5] == player) ||
+    (board[6] == player && board[7] == player && board[8] == player) ||
+    (board[0] == player && board[3] == player && board[6] == player) ||
+    (board[1] == player && board[4] == player && board[7] == player) ||
+    (board[2] == player && board[5] == player && board[8] == player) ||
+    (board[0] == player && board[4] == player && board[8] == player) ||
+    (board[2] == player && board[4] == player && board[6] == player) ||
+    (availSpots(board).length == 0)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function winner(player, board){
+    if (
+    (board[0] == player && board[1] == player && board[2] == player) ||
+    (board[3] == player && board[4] == player && board[5] == player) ||
+    (board[6] == player && board[7] == player && board[8] == player) ||
+    (board[0] == player && board[3] == player && board[6] == player) ||
+    (board[1] == player && board[4] == player && board[7] == player) ||
+    (board[2] == player && board[5] == player && board[8] == player) ||
+    (board[0] == player && board[4] == player && board[8] == player) ||
+    (board[2] == player && board[4] == player && board[6] == player)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function gameTieEval(board){
+    if(availSpots(board).length == 0){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }); //END DOC READY
