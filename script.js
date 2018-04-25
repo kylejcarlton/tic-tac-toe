@@ -46,7 +46,6 @@ $(document).ready(function(){
     }
     else{
       if(turn == "aiPlayer"){
-        console.log("logic to make move and write it !!");
         aiMove(board, aiPlayer);
       }
       else if(turn == "huPlayer"){
@@ -57,7 +56,7 @@ $(document).ready(function(){
   function aiMove(board, aiPlayer){
     potentialMoves = availSpots(board);
     moves = [];
-      console.log("potentialMoves:");
+    console.log("potentialMoves:");
     console.log(potentialMoves);
     for(j=0; j<potentialMoves.length; j++){
       var potentialBoard = board.slice(0);
@@ -65,6 +64,7 @@ $(document).ready(function(){
       moves.push({option:j,position:potentialMoves[j],move:aiPlayer,board:potentialBoard,level:0,rating:0});
       miniMax(moves[j]);
     }
+    console.log("Moves:");
     console.log(moves);
     var winningMoves = [];
     for(l=0; l<moves.length; l++){
@@ -83,6 +83,7 @@ $(document).ready(function(){
           min = winningMoves[m].level;
       }
     }
+    console.log("Winning Moves:");
     console.log(winningMoves);
     for(n=0; n<winningMoves.length; n++){
       if(winningMoves[n].level == min /*&& endGameEval(huPlayer, winningMoves.board) != true*/){
